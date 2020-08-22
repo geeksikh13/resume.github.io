@@ -1,0 +1,449 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+
+    <!--Device Compatibility-->
+    <meta name="app-mobile-web-app-capable" content="yes" />
+    <meta name="app-mobile-web-app-status-bar-style" content="black" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--Title of the App-->
+    <title>Resume</title>
+
+    <!--CSS for the page-->
+    <style>
+
+        body {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: center;
+        }
+
+        #summary p {
+            font-style:italic;
+        }
+
+        #skills table{
+           padding: 5px;
+            margin: auto;
+        }
+
+        #skills tr {
+            padding:2px;
+            margin:auto;
+        }
+
+        #skills td {
+            padding: 2px;
+            margin: auto;
+        }
+
+        #sidebar {
+            position: fixed;        
+            width: 15%;
+            z-index:1;
+            background: black;
+            top: 2px;
+            right: 1px;
+            overflow-x: hidden;
+            overflow-wrap: break-word;
+            padding: 6px 0;
+        }
+
+        #sidebar a{
+            padding: 6px 8px 6px 4px;
+            text-decoration: none;
+            font-size: 25px;
+            color: white;
+            display: block;
+        }
+
+        #sidebar a:hover {
+            background:white;
+            color:black;
+        }
+
+        section {
+            border-bottom: 1px solid black;
+        }
+
+        #header {
+            border-bottom: 5px solid black;
+            width:auto;
+            margin: auto;
+            padding: 10px;
+            color:white;
+            background:black;
+
+        }
+
+        .address {
+            font-size: 10pt;
+            
+        }
+
+        #header p {
+            font-size: 10pt;
+            margin: auto;
+        }
+
+        #header p.name {
+            font-size:20px;
+            margin:0;
+        }
+
+        .contact {
+            padding-bottom:5px;
+            border-bottom: 5px solid white;
+        }
+
+        h2 {
+
+        }
+
+        #container {
+            padding:2px;
+            width: 80%;
+        }
+
+        @media screen and (max-width: 700px) {
+            #sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+                #sidebar a {
+                    width:100%;
+                    float: left;
+                }
+
+            div.content {
+                margin-left: 0;
+            }
+
+            #container {
+            }
+
+        }
+
+        @media screen and (max-width: 400px) {
+            #sidebar  a {
+                display: none;
+            }
+
+            #container {
+
+            }
+
+            ul li {
+                list-style:none;
+            }
+
+
+        }
+
+        table{
+            margin:auto;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        .mySlides {
+            display:none;
+        }
+
+        /* Slideshow container */
+
+        .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
+            color: black;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        /* Position the "previous button" to the right */
+        .prev {
+            left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+            /* On hover, add a black background color with a little bit see-through */
+            .prev:hover, .next:hover {
+                background-color: rgba(0,0,0,0.8);
+            }
+
+        /* Caption text */
+        .text {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Number text (1/3 etc) */
+        .numbertext {
+            color: black;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+            right:1px;
+        }
+
+        h4 {
+            font-style: italic;
+        }
+
+        h5 {
+            font-weight:normal;
+        }
+
+        /* The dots/bullets/indicators */
+        .dot {
+            cursor: pointer;
+            height: 30px;
+            width: 50px;
+            margin: auto;
+            background-color: #bbb;            
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+            .active, .dot:hover {
+                background-color: #717171;
+            }
+
+        .top {
+            background:black;
+            color:white;
+            font-family:Calibri;
+            right: 50px;
+            position:absolute;
+            width:70px;
+            height:36px;
+            padding:3px 3px 3px 3px;
+        }
+
+    </style>
+
+    <!--Javascript for the page-->
+    <script>
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+    </script>
+
+</head>
+
+<body>
+    
+    <div id="sidebar">
+
+        <section id="header">
+            <p class="name">John Doe</p>
+
+            <div class="address">
+                <p>123 Four Steet, City State 789123</p>
+            </div>
+
+            <div class="contact">
+                <p>abc@xyz.com</p>
+                <p>1234567890</p>
+                <p>www.identity.com</p>
+            </div>
+        </section>
+
+        <a href="#summary">Summary</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#projects">Projects</a>
+        <a href="#awards">Awards & Affiliations </a>
+        <a href="#references">References</a>
+
+
+
+    </div>
+
+    <div id="container">
+        <section id="summary">
+            <h3>Summary</h3>
+            <p>I have over 5 years if experience in Imaginary language and has used the Theoretical set of tools for coding and deployment.</p>
+        </section>
+
+        <section id="skills">
+            <h3>Skills</h3>
+
+            <table>
+                <tr>
+                    <td>MS Office</td>
+                    <td>Imaginary</td>
+                    <td>Theoretical</td>
+                </tr>
+                <tr>
+                    <td>Design</td>
+                    <td>Problem Solving</td>
+                    <td>Testing</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="experience">
+            <h3>Experience</h3>            
+
+            <!-- Slideshow container -->
+            <div class="slideshow-container">
+
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+
+                <!-- The dots/circles -->
+                <div style="text-align:center">
+                    <span class="dot" onclick="currentSlide(1)">View</span>
+                </div>
+                <!-- Full-width images with number and caption text -->
+                <div class="mySlides fade">
+                    <div class="numbertext">1 / 3</div>
+                    <h4>Job Title1</h4>
+                    <h6>From-To | Location</h6>
+                    <ul>
+                        <li>Duty1</li>
+                        <li>Duty2</li>
+                        <li>Duty3</li>
+                    </ul>
+                    <div class="text"></div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">2 / 3</div>
+                    <h4>Job Title2</h4>
+                    <h6>From-To | Location</h6>
+                    <ul>
+                        <li>Duty1</li>
+                        <li>Duty2</li>
+                        <li>Duty3</li>
+                    </ul>
+                    <div class="text"></div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="numbertext">3 / 3</div>
+                    <h4>Job Title3</h4>
+                    <h6>From-To | Location</h6>
+                    <ul>
+                        <li>Duty1</li>
+                        <li>Duty2</li>
+                        <li>Duty3</li>
+                    </ul>
+                    <div class="text"></div>
+                </div>
+
+                <!-- Next and previous buttons -->
+
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <br>
+
+        </section>
+
+        <section id="education">
+            <h3>Education</h3>
+            <h4>Degree - <em>Institution</em></h4><h5>MM/YY</h5>
+            <h4>Diploma - <em>Institution</em></h4><h5>MM/YY</h5>
+        </section>
+
+        <section id="certifications">
+            <h3>Certifications</h3><a href="#" class="top">top</a>
+            <h4>Certificate - <em>Institution</em></h4><h5>MM/YY</h5>
+            <h4>Training - <em>Institution</em></h4><h5>MM/YY</h5>
+
+        </section>
+
+        <section id="projects">
+            <h3>Projects</h3><a href="#" class="top">top</a>
+            <h4>Project 1 - <em>Platform</em></h4><h5>MM/YY</h5>
+            <h4>Project 2 - <em>Platform</em></h4><h5>MM/YY</h5>
+        </section>
+
+        <section id="awards">
+            <h3>Awards and Affiliations</h3><a href="#" class="top">top</a>
+            <h4>Award- <em>Institution</em></h4><h5>MM/YY</h5>
+            <h4>Affiliation - <em>Institution</em></h4><h5>MM/YY</h5>
+        </section>
+
+        <section id="references">
+            <h3>References</h3><a href="#" class="top">top</a>
+
+            <table>
+                <tr>
+                    <td>Name1</td>
+                    <td>Contact1</td>
+                </tr>
+                <tr>
+                    <td>Name2</td>
+                    <td>Contact2</td>
+                </tr>
+            </table>
+
+        </section>
+
+    </div>
+
+
+</body>
+
+</html>
